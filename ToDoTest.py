@@ -1,59 +1,41 @@
-
-def list_tasks():
-     f = open("tasks.txt", "r") 
-     print(f.read())
-     f.close()
-
-def add_tasks():
-    f = open("tasks.txt", "a")
-    essen = input("What do you want to add?: ")
-    f.write('\n' + essen)
-    f.close()
-
-def remove_task(one_to_remove):  
-    f = open("tasks.txt", "r")
-    lines = f.readlines()
-    f.close()
-    p = 0
-    f = open("tasks.txt", "w")
-    for index,p in enumerate(lines):
-        if index != one_to_remove - 1:
-            f.write(p + '\n')
-    f.close()
+import tkinter as tk
+from tkinter import *
+z = 0.5 
+def remove_button(new_task, button_for_delete):
+    new_task.destroy()
+    button_for_delete.destroy()
 
 
-print("\n\nWelcome to the To Do app. What do you want to do?\n")
-print("------------------------------\n")
-print("1. List existing tasks\n")
-print("2. Add a new task\n")
-print("3. Remove a task\n")
-print("4. Quit\n")
+def submit_info():  
+    global z
+    task_info = add_new.get()
+    new_task = tk.Label(root, text = task_info, font = ('Arial', 18))
+    new_task.place(relx = 0.5, rely = z, anchor="center" )
+    add_new.delete(0, "end")
+    button_for_delete = tk.Button(root, text = "X", width = 1, height = 1, command=lambda: remove_button(new_task = new_task, button_for_delete= button_for_delete))
+    button_for_delete.place(relx=0.90, rely = z, anchor = "center")
+    z += 0.04
 
 
-while 1:
-    feed = input("Enter your choice: ")
-    feed = int(feed)
-    if feed == 1:
-        print("You choose to list tasks")
-        list_tasks()
-    elif feed == 2:
-        print("You choose to add a new task")
-        add_tasks()
-    elif feed == 3:
-        print("You chose to remove a task")
-        list_tasks()
-        one_to_remove = input("Which tasks do you want to remove(1-the top one, 2 - the second from top to bottom and so on)?: ")
-        one_to_remove = int(one_to_remove)
-        remove_task(one_to_remove)
-    elif feed == 4:
-        print("Quit")
-        exit()
-    else:
-        print("Non valid option(Valid options: 1, 2, 3, 4). Try again")
+root = tk.Tk()
+root.geometry("400x700")
+root.title("To Do App")
+Scrollbar = Scrollbar(root)
+Scrollbar.place(relx=1.0, rely=0.0, anchor="ne", relheight=1.0)
+
+label = tk.Label(root, text = "To Do App", font = ('Arial', 18))
+label.place(relx = 0.35, rely = 0.02)
+
+
+add_new = Entry(root)
+add_new.place(relx = 0.3, rely = 0.1)
+
+button = tk.Button(root, text = "Add a new Task", width = 25, command=submit_info)
+button.place(relx = 0.22, rely = 0.2)
 
 
 
-
+root.mainloop()
 
 
     
